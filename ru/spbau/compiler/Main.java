@@ -1,25 +1,40 @@
 package ru.spbau.compiler;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import ru.spbau.compiler.sintax.*;
+
 public class Main {
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Name x = new Name("x"); //имя переменной
-        Name fact = new Name("fact"); //имя функции
-        
-        IntegerConstant one = new IntegerConstant(1);
-        IntegerConstant six = new IntegerConstant(6);
-        Sub sub = new Sub(x, one);
-        Apply app = new Apply(fact, sub);
-        Mul mul = new Mul(x, app);
-        If cond = new If(x, mul, one);
-        Fun fun = new Fun(x,cond);
+        if (args.length < 1) {
+            System.err.println("File name expected");
+            System.exit(1);
+        }
 
-        Definition def = new Definition(fact, fun); //bind name and function
-        Apply call = new Apply(fun, six); //call function from six
-        
-        System.out.println(call.evaluateItem().stringRepresentation());
-        System.out.println(def.stringRepresentation());
+        BufferedReader in = null;
+        try {
+            in = new BufferedReader(new FileReader(args[0]));
+            Tokenizer tok = new SimpleTokenizer(in);
+            Parser pars = new SimpleParser(tok);
+            Program prog = pars.parse();
+            System.out.println(prog.eval().str());
+        } catch (FileNotFoundException e) {
+            System.err.println("file " + args[0] + " not found");
+        } catch (SyntaxException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException e) {
+                //nothing to do
+            }
+        }
     }
 }

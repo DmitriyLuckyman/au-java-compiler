@@ -1,4 +1,6 @@
-package ru.spbau.compiler;
+package ru.spbau.compiler.semantics;
+
+import java.util.Map;
 
 public abstract class BinaryOperation implements SyntaxTreeItem {
     private SyntaxTreeItem myLeftOperand;
@@ -17,35 +19,27 @@ public abstract class BinaryOperation implements SyntaxTreeItem {
         return myRightOperand;
     }
     
-    public SyntaxTreeItem leftEval() {
-        return left().evaluateItem();
+    public SyntaxTreeItem leftEval(Map<Name, SyntaxTreeItem> context) {
+        return left().eval(context);
     }
     
-    public SyntaxTreeItem rightEval() {
-        return right().evaluateItem();
+    public SyntaxTreeItem rightEval(Map<Name, SyntaxTreeItem> context) {
+        return right().eval(context);
     }
     
     public SyntaxTreeItem leftSubst(Name var, SyntaxTreeItem expr) {
-        return left().substitution(var, expr);
+        return left().subst(var, expr);
     }
     
     public SyntaxTreeItem rightSubst(Name var, SyntaxTreeItem expr) {
-        return right().substitution(var, expr);
+        return right().subst(var, expr);
     }
     
     public String leftStr() {
-        return left().stringRepresentation();
+        return left().str();
     }
     
     public String rightStr() {
-        return right().stringRepresentation();
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof BinaryOperation) {
-            return left().equals(right());
-        }
-        return false;
+        return right().str();
     }
 }

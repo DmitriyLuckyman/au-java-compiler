@@ -1,4 +1,6 @@
-package ru.spbau.compiler;
+package ru.spbau.compiler.semantics;
+
+import java.util.Map;
 
 public class Sub extends BinaryOperation {
     public Sub(SyntaxTreeItem left, SyntaxTreeItem right) {
@@ -6,9 +8,9 @@ public class Sub extends BinaryOperation {
     }
     
     @Override
-    public SyntaxTreeItem evaluateItem() {
-        SyntaxTreeItem left = leftEval();
-        SyntaxTreeItem right = rightEval();
+    public SyntaxTreeItem eval(Map<Name, SyntaxTreeItem> context) {
+        SyntaxTreeItem left = leftEval(context);
+        SyntaxTreeItem right = rightEval(context);
         if (left instanceof IntegerConstant
                 && right instanceof IntegerConstant) {
             int leftVal = ((IntegerConstant)left).intValue();
@@ -19,23 +21,15 @@ public class Sub extends BinaryOperation {
     }
 
     @Override
-    public String stringRepresentation() {
-        return "(" + leftStr() + ") - (" + rightStr() + ")";
+    public String str() {
+        return "(" + leftStr() + "-" + rightStr() + ")";
     }
 
     @Override
-    public SyntaxTreeItem substitution(Name oldName, SyntaxTreeItem newVal) {
+    public SyntaxTreeItem subst(Name oldName, SyntaxTreeItem newVal) {
         SyntaxTreeItem left = leftSubst(oldName, newVal);
         SyntaxTreeItem right = rightSubst(oldName, newVal);
         return new Sub(left, right);
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Sub) {
-            Sub sub = (Sub)obj;
-            return left().equals(sub.left()) && right().equals(sub.right());
-        }
-        return false;
-    }
 }
