@@ -1,4 +1,4 @@
-package ru.spbau.compiler.sintax;
+package ru.spbau.compiler.syntax;
 
 import java.util.HashMap;
 import java.util.Map;

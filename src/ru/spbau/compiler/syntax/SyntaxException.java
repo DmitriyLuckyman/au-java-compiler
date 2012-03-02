@@ -1,4 +1,4 @@
-package ru.spbau.compiler.sintax;
+package ru.spbau.compiler.syntax;
 
 public class SyntaxException extends Exception {
     private String myLine;

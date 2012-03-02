@@ -32,13 +32,7 @@ public class Name implements SyntaxTreeItem {
     
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj instanceof Name) {
-            return ((Name)obj).str().equals(myName);
-        }
-        return false;
+        return this == obj || obj instanceof Name && ((Name) obj).str().equals(myName);
     }
 
     @Override

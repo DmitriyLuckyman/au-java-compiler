@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import ru.spbau.compiler.sintax.*;
+import ru.spbau.compiler.syntax.*;
 
 public class Main {
     /**

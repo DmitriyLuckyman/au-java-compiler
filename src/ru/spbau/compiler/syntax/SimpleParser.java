@@ -1,4 +1,4 @@
-package ru.spbau.compiler.sintax;
+package ru.spbau.compiler.syntax;
 
 import ru.spbau.compiler.semantics.*;
 
@@ -31,7 +31,7 @@ public class SimpleParser implements Parser {
     }
     
     private SyntaxTreeItem readExpression() throws SyntaxException {
-        SyntaxTreeItem item = null;
+        SyntaxTreeItem item;
         String old = myToken;
         myToken = myTokenizer.getToken();
         if ((old == null) || (myToken == null)) {
@@ -57,8 +57,7 @@ public class SimpleParser implements Parser {
     }
     
     private Name parseVariable() {
-        Name res = new Name(myToken);
-        return res;
+        return new Name(myToken);
     }
     
     private Fun parseFunction() throws SyntaxException {
