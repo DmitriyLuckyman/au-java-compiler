@@ -1,5 +1,6 @@
 package ru.spbau.compiler.semantics;
 
+import java.math.BigInteger;
 import java.util.Map;
 
 public class If implements SyntaxTreeItem {
@@ -18,8 +19,8 @@ public class If implements SyntaxTreeItem {
     public SyntaxTreeItem eval(Map<Name, SyntaxTreeItem> context) {
         SyntaxTreeItem cond = myCondition.eval(context);
         if (cond instanceof IntegerConstant) {
-            int val = ((IntegerConstant)cond).intValue();
-            if (val > 0) {
+            BigInteger val = ((IntegerConstant)cond).intValue();
+            if (val.compareTo(BigInteger.ZERO) > 0) {
                 return myIfTrueAction.eval(context);
             } else {
                 return myIfFalseAction.eval(context);

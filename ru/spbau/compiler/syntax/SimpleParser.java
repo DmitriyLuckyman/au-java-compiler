@@ -22,6 +22,12 @@ public class SimpleParser implements Parser {
             if (myToken.equals(";")) {
                 myToken = myTokenizer.getToken();
                 myProgram.setExpression(readExpression());
+                myToken = myTokenizer.getToken();
+                if (myToken != null) {
+                    throw new SyntaxException(myToken,
+                            myTokenizer.getLineNumber(),
+                            "end of file expected");
+                }
             } else {
                 Name name = new Name(myToken);
                 myToken = myTokenizer.getToken();
@@ -104,6 +110,6 @@ public class SimpleParser implements Parser {
     }
     
     private SyntaxTreeItem parseConstant() {
-        return new IntegerConstant(Integer.parseInt(myToken));
+        return new IntegerConstant(myToken);
     }
 }

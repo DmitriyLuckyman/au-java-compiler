@@ -1,11 +1,16 @@
 package ru.spbau.compiler.semantics;
 
+import java.math.BigInteger;
 import java.util.Map;
 
 public class IntegerConstant implements SyntaxTreeItem {
-    private int myValue;
+    private BigInteger myValue;
 
-    public IntegerConstant(int value) {
+    public IntegerConstant(String value) {
+        myValue = new BigInteger(value);
+    }
+    
+    public IntegerConstant(BigInteger value) {
         myValue = value;
     }
     
@@ -16,10 +21,10 @@ public class IntegerConstant implements SyntaxTreeItem {
 
     @Override
     public String str() {
-        return String.valueOf(myValue);
+        return myValue.toString();
     }
     
-    public int intValue() {
+    public BigInteger intValue() {
         return myValue;
     }
 

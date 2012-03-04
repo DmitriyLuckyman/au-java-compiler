@@ -2,6 +2,9 @@ package ru.spbau.compiler.semantics;
 
 import java.util.Map;
 
+/**
+ * Base class for binary operation
+ */
 public abstract class BinaryOperation implements SyntaxTreeItem {
     private SyntaxTreeItem myLeftOperand;
     private SyntaxTreeItem myRightOperand;

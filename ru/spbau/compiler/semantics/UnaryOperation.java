@@ -2,6 +2,9 @@ package ru.spbau.compiler.semantics;
 
 import java.util.Map;
 
+/**
+ * Base class for unary operations
+ */
 public class UnaryOperation implements SyntaxTreeItem {
     private SyntaxTreeItem myOperand;
     
@@ -23,6 +26,7 @@ public class UnaryOperation implements SyntaxTreeItem {
         return myOperand.str();
     }
     
+    @Override
     public SyntaxTreeItem subst(Name name, SyntaxTreeItem newVal) {
         return myOperand.subst(name, newVal);
     }

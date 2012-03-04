@@ -1,5 +1,6 @@
 package ru.spbau.compiler.semantics;
 
+import java.math.BigInteger;
 import java.util.Map;
 
 public class Mul extends BinaryOperation {
@@ -13,9 +14,9 @@ public class Mul extends BinaryOperation {
         SyntaxTreeItem right = rightEval(context);
         if (left instanceof IntegerConstant
                 && right instanceof IntegerConstant) {
-            int leftVal = ((IntegerConstant)left).intValue();
-            int rightVal = ((IntegerConstant)right).intValue();
-            return new IntegerConstant(leftVal*rightVal);
+            BigInteger leftVal = ((IntegerConstant)left).intValue();
+            BigInteger rightVal = ((IntegerConstant)right).intValue();
+            return new IntegerConstant(leftVal.multiply(rightVal));
         } else {
             return new Mul(left, right);
         }
