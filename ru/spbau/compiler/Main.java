@@ -11,8 +11,11 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        if (args.length < 1) {
-            System.err.println("File name expected");
+        if (args.length < 2 ||
+                (!args[1].equals("-e") && !args[1].equals("-p")) ) {
+            System.err.println("usage:\n\tprogram filename -p|-e");
+            System.err.println("\t-p --- print program");
+            System.err.println("\t-e --- evaluate program");
             System.exit(1);
         }
 
@@ -22,7 +25,11 @@ public class Main {
             Tokenizer tok = new SimpleTokenizer(in);
             Parser pars = new SimpleParser(tok);
             Program prog = pars.parse();
-            System.out.println(prog.eval().str());
+            if (args[1].equals("-p")) {
+                System.out.println(prog);
+            } else {
+                System.out.println(prog.eval().str());
+            }
         } catch (FileNotFoundException e) {
             System.err.println("file " + args[0] + " not found");
         } catch (SyntaxException e) {

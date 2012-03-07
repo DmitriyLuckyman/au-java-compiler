@@ -2,6 +2,7 @@ package ru.spbau.compiler.syntax;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import ru.spbau.compiler.semantics.Name;
 import ru.spbau.compiler.semantics.SyntaxTreeItem;
 
@@ -40,5 +41,20 @@ public class Program {
      */
     public SyntaxTreeItem eval() {
         return myExpression.eval(myContext);
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+        for (Entry<Name, SyntaxTreeItem> entry : myContext.entrySet()) {
+            str.append(entry.getKey().str());
+            str.append(" = ");
+            str.append(entry.getValue().str());
+            str.append("\n");
+        }
+        if (myExpression != null) {
+            str.append(myExpression.str());
+        }
+        return str.toString();
     }
 }

@@ -6,6 +6,8 @@ public class SimpleParser implements Parser {
     private Tokenizer myTokenizer;
     private Program myProgram = new Program();
     private String myToken;
+    private int myFormalArgsCounter;
+    private final String myFormalPrefix = "formal_arg$";
     
     public SimpleParser(Tokenizer tok) {
         myTokenizer = tok;
@@ -68,9 +70,10 @@ public class SimpleParser implements Parser {
     
     private Fun parseFunction() throws SyntaxException {
         Name arg = new Name(myToken);
+        Name newArg = new Name(myFormalPrefix + myFormalArgsCounter++);
         myToken = myTokenizer.getToken();
         SyntaxTreeItem fun = readExpression();
-        return new Fun(arg, fun);
+        return new Fun(newArg, fun.subst(arg, newArg));
     }
     
     private SyntaxTreeItem parseApplication() throws SyntaxException {
